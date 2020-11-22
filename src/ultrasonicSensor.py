@@ -3,7 +3,7 @@ from utime import sleep_us, ticks_us
 from deskHeightSensor import DeskHeightSensor
 
 
-class UltrasonicDeskHeightSensor(DeskHeightSensor):
+class UltrasonicSensor(DeskHeightSensor):
     TRIGGER_ON_DURATION_IN_MS = 10
     TRIGGER_OFF_DURATION_IN_MS = 2
     RETRY_COUNT = 100
@@ -37,7 +37,7 @@ class UltrasonicDeskHeightSensor(DeskHeightSensor):
             retryCount += 1
 
         t2 = ticks_us()
-        return UltrasonicDeskHeightSensor.getMicrosecondsInCentimeters(t2 - t1)
+        return UltrasonicSensor.getMicrosecondsInCentimeters(t2 - t1)
 
     '''
     Sound travels at 343 m/s --> 29 microseconds/cm

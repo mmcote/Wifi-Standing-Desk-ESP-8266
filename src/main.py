@@ -1,7 +1,7 @@
 import usocket as socket
 import ure
 from config import Config
-from ultrasonicDeskHeightSensor import UltrasonicDeskHeightSensor
+from ultrasonicDeskHeightSensor import UltrasonicSensor
 from desk import Desk
 
 
@@ -14,7 +14,7 @@ def sendResponse(statusCode, responseDict):
     conn.close()
 
 config = Config()
-sensor = UltrasonicDeskHeightSensor(config.sensorConfig)
+sensor = UltrasonicSensor(config.sensorConfig)
 desk = Desk(config.deskConfig, sensor)
 desk.stop()
 
@@ -43,7 +43,7 @@ while True:
         matches = regex.match(request)
         if matches is not None:
             height = int(regex.match(request).group(1))
-            responseDict["height"] = desk.adjustToHeight(height)
+            responseDict["height"] = desk.updateTargetHeight(height)
         else:
             statusCode = 400
             responseDict["error"] = "Unable to process height value."
