@@ -1,5 +1,6 @@
 import usocket as socket
 import ure
+import uselect
 from config import Config
 from ultrasonicDeskHeightSensor import UltrasonicSensor
 from desk import Desk
@@ -22,28 +23,33 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind(('', 80))
 s.listen(5) # Number of queued connections
 
-while True:
-    conn, addr = s.accept()
-    print('Got a connection from %s' % str(addr))
+sPoller = uselect.poll()
+sPoller.register(s, uselect.POLLIN)
 
+def handle(conn):
     byteRequest = conn.recv(1024)
     request = byteRequest.decode('utf-16')
 
     getHeightRequest = request.find('/height')
-    toHeightRequest = request.find('/?height')
+    setHeightRequest = request.find('?height')
+    cancelRequest = request.find('/cancel')
 
     statusCode = 200
     responseDict = {}
     if getHeightRequest >= 0:
-        responseDict["height"] = str(desk.getCurrentHeight())
-    elif toHeightRequest >= 0:
+        responseDict["height"] = str(desk.getHeight())
+    elif cancelRequest >= 0:
+        responseDict["msg"] = "Adjustment Cancelled"
+        desk.cancel()
+    elif setHeightRequest >= 0:
         desk.stop()
 
         regex = ure.compile("^GET.\/\?height=([0-9]*)")
         matches = regex.match(request)
         if matches is not None:
             height = int(regex.match(request).group(1))
-            responseDict["height"] = desk.updateTargetHeight(height)
+            responseDict["height"] = height
+            desk.setTargetHeight(height)
         else:
             statusCode = 400
             responseDict["error"] = "Unable to process height value."
@@ -51,4 +57,16 @@ while True:
         statusCode = 404
         responseDict["error"] = "No endpoint found"
 
-    sendResponse(statusCode, responseDict)
+    return statusCode, responseDict
+
+while True:
+    # Poll every 10 milliseconds for a connection
+    res = sPoller.poll(10)
+    if res:
+        conn, addr = s.accept()
+        print('Got a connection from %s' % str(addr))
+        statusCode, response = handle(conn)
+        sendResponse(statusCode, response)
+    else:
+        desk.adjust()
+

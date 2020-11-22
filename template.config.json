@@ -1,0 +1,25 @@
+{
+    "wifi": {
+        "ssid": "<wifi-ssid>",
+        "password": "<wifi-password>"
+    },
+    "deskIp": {
+        "ip": "<local-ip>",
+        "gateway": "<local-gateway>"
+    },
+    "desk": {
+        "upPin": 12,
+        "downPin": 14,
+        "invertedPins": "False",
+        "numHeightChecksRequired": 5,
+        "allowableErrorInCentimeters": 1.0,
+        "measurementDeltaInMicroseconds": 40000,
+        "rollingWindowSize": 20,
+        "allowableMeasurementErrorRatio": 0.05,
+        "consecutiveErrorsUntilRestart": 10
+    },
+    "sensor": {
+        "triggerPin": 5,
+        "echoPin": 4
+    }
+}
