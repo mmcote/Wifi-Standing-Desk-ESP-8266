@@ -1,0 +1,2 @@
+class DeskHeightSensor(object):
+    pass
