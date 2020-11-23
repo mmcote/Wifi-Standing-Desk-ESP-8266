@@ -35,7 +35,7 @@ class Desk(object):
             if currentValue <= self.targetHeight + self.errorInCentimeters and currentValue > self.targetHeight - self.errorInCentimeters:
                 self.stop()
                 self.state.reset()
-                self.checksCompleted -= 1
+                self.checksRemaining -= 1
             elif currentValue < self.targetHeight - self.errorInCentimeters:
                 self.up()
             elif currentValue > self.targetHeight + self.errorInCentimeters:

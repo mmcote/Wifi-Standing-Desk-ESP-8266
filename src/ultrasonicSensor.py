@@ -1,9 +1,9 @@
 from machine import Pin
 from utime import sleep_us, ticks_us
-from deskHeightSensor import DeskHeightSensor
+from deskHeightSensor import HeightSensor
 
 
-class UltrasonicSensor(DeskHeightSensor):
+class UltrasonicSensor(HeightSensor):
     TRIGGER_ON_DURATION_IN_MS = 10
     TRIGGER_OFF_DURATION_IN_MS = 2
     RETRY_COUNT = 100

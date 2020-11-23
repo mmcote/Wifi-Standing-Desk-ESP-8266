@@ -1,0 +1,50 @@
+body {
+    height: 100vh;
+    padding: 0;
+    background: #a9a7ac !important;
+}
+
+.button-group {
+    margin: auto;
+    padding: 10px;
+    width: 100%;
+}
+
+.core-button {
+    border-radius: 0.25rem 0.25rem 0 0 !important;
+    width: 100%;
+}
+
+.secondary-button {
+    border-radius: 0 0 0.25rem 0.25rem !important;
+    width: 100%;
+}
+
+.only-button {
+    border-radius: 0.25rem 0.25rem 0.25rem 0.25rem !important;
+    width: 100%;
+}
+
+.set {
+    background-color: rgb(26, 26, 26);
+}
+
+#up {
+    background-color: rgb(27, 189, 135);
+    color: beige;
+}
+
+#down {
+    background-color: royalblue;
+    color: beige;
+}
+
+#cancel {
+    background-color: crimson;
+    color: beige;
+}
+
+#config {
+    background-color: crimson;
+    color: beige;
+}

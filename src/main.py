@@ -14,18 +14,6 @@ def sendResponse(statusCode, responseDict):
         conn.send(str(attribute) + ': ' + str(responseDict[attribute]))
     conn.close()
 
-config = Config()
-sensor = UltrasonicSensor(config.sensorConfig)
-desk = Desk(config.deskConfig, sensor)
-desk.stop()
-
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind(('', 80))
-s.listen(5) # Number of queued connections
-
-sPoller = uselect.poll()
-sPoller.register(s, uselect.POLLIN)
-
 def handle(conn):
     byteRequest = conn.recv(1024)
     request = byteRequest.decode('utf-16')
@@ -59,14 +47,28 @@ def handle(conn):
 
     return statusCode, responseDict
 
-while True:
-    # Poll every 10 milliseconds for a connection
-    res = sPoller.poll(10)
-    if res:
-        conn, addr = s.accept()
-        print('Got a connection from %s' % str(addr))
-        statusCode, response = handle(conn)
-        sendResponse(statusCode, response)
-    else:
-        desk.adjust()
+def main():
+    config = Config()
+    sensor = UltrasonicSensor(config.sensorConfig)
+    desk = Desk(config.deskConfig, sensor)
+    desk.stop()
 
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.bind(('', 80))
+    s.listen(5)
+
+    sPoller = uselect.poll()
+    sPoller.register(s, uselect.POLLIN)
+
+    while True:
+        # Poll every 10 milliseconds for a connection
+        res = sPoller.poll(10)
+        if res:
+            conn, addr = s.accept()
+            # print('Got a connection from %s' % str(addr))
+            statusCode, response = handle(conn)
+            sendResponse(statusCode, response)
+        else:
+            desk.adjust()
+
+main()
