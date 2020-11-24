@@ -43,9 +43,22 @@ function cancelAdjustment() {
   send('http://' + getLocalIp() + '/cancel')
 }
 
+async function getCurrentHeight() {
+  console.log("ehRKLDSFLKD")
+  return send('http://' + getLocalIp() + '/height')
+  .then((resp) => resp.text())
+  .then((body) => {
+    const reg = '^height:.([0-9]+.[0-9]+)$'; 
+    const match = body.match(reg);
+    if (match != null) {
+      return Math.round(parseFloat(match[1]))
+    }
+    return 0;
+  })
+}
+
 async function send(url) {
-  const response = await fetch(url);
-  console.log(response.status);
+  return await fetch(url);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -62,4 +75,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
       setLocalIp(localIp);
     });
+   
+    const heightLabel = document.getElementById('heightLabel')
+    setInterval(()=> getCurrentHeight().then((height) => { 
+      heightLabel.innerHTML = height; 
+      console.log(height) }), 3000);
 });

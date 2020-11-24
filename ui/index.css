@@ -4,10 +4,14 @@ body {
     background: #a9a7ac !important;
 }
 
+.card {
+    width: 90%;
+}
+
 .button-group {
     margin: auto;
     padding: 10px;
-    width: 100%;
+    width: 90%;
 }
 
 .core-button {
@@ -23,13 +27,13 @@ body {
 .span-width-top {
     margin: auto;
     padding: 10px 10px 0px 10px;
-    width: 100%;
+    width: 90%;
 }
 
 .span-width-bottom {
     margin: auto;
     padding: 0 10px 10px 10px;
-    width: 100%;
+    width: 90%;
 }
 
 .input-text-button {
