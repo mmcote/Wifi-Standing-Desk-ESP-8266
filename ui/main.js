@@ -1,10 +1,14 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow } = require('electron');
 const Store = require('electron-store');
+
+const STANDING = "standing";
+const SITTING = "sitting";
+const IP = "ip";
 
 function init() {
     const store = new Store();
-    store.set("standing", 70);
-    store.set("sitting", 50);
+    store.set(STANDING, 70);
+    store.set(SITTING, 50);
 
     global.db = store;
 

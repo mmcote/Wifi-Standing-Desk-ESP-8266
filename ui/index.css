@@ -20,10 +20,31 @@ body {
     width: 100%;
 }
 
+.span-width-top {
+    margin: auto;
+    padding: 10px 10px 0px 10px;
+    width: 100%;
+}
+
+.span-width-bottom {
+    margin: auto;
+    padding: 0 10px 10px 10px;
+    width: 100%;
+}
+
+.input-text-button {
+    border-radius: 0 0 0.25rem 0.25rem !important;
+    width: 100%;
+}
+
 .only-button {
     border-radius: 0.25rem 0.25rem 0.25rem 0.25rem !important;
     width: 100%;
 }
+
+/* .form-group {
+    width: 100%;
+} */
 
 .set {
     background-color: rgb(26, 26, 26);
@@ -42,6 +63,10 @@ body {
 #cancel {
     background-color: crimson;
     color: beige;
+}
+
+#localIps {
+    border-radius: 0.25rem 0.25rem 0 0 !important;
 }
 
 #config {
